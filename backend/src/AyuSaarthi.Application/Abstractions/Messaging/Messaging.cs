@@ -1,0 +1,21 @@
+namespace AyuSaarthi.Application.Abstractions.Messaging;
+
+public interface ICommand<TResponse>;
+
+public interface IQuery<TResponse>;
+
+public interface ICommandHandler<in TCommand, TResponse> where TCommand : ICommand<TResponse>
+{
+    Task<TResponse> Handle(TCommand command, CancellationToken cancellationToken);
+}
+
+public interface IQueryHandler<in TQuery, TResponse> where TQuery : IQuery<TResponse>
+{
+    Task<TResponse> Handle(TQuery query, CancellationToken cancellationToken);
+}
+
+public interface IDispatcher
+{
+    Task<TResponse> Send<TResponse>(ICommand<TResponse> command, CancellationToken cancellationToken = default);
+    Task<TResponse> Query<TResponse>(IQuery<TResponse> query, CancellationToken cancellationToken = default);
+}
