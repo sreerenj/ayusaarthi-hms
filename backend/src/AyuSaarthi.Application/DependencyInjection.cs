@@ -1,4 +1,5 @@
 using AyuSaarthi.Application.Abstractions.Messaging;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AyuSaarthi.Application;
@@ -21,6 +22,8 @@ public static class DependencyInjection
             services.AddScoped(service, implementation);
 
         services.AddScoped<IDispatcher, Dispatcher>();
+        services.AddValidatorsFromAssembly(assembly, includeInternalTypes: true);
+        services.AddAutoMapper(cfg => cfg.AddMaps(assembly));
         return services;
     }
 }

@@ -1,4 +1,5 @@
 using AyuSaarthi.Application.Common;
+using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,20 @@ internal sealed class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> log
 {
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
+        if (exception is ValidationException validationException)
+        {
+            var errors = validationException.Errors
+                // Drop the command's wrapper property so keys match the request body (e.g. "FirstName").
+                .GroupBy(e => e.PropertyName[(e.PropertyName.IndexOf('.') + 1)..])
+                .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
+
+            httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+            await httpContext.Response.WriteAsJsonAsync(
+                new ValidationProblemDetails(errors) { Status = StatusCodes.Status400BadRequest, Title = "Validation failed" },
+                cancellationToken);
+            return true;
+        }
+
         var (status, title) = exception switch
         {
             NotFoundException => (StatusCodes.Status404NotFound, "Resource not found"),
