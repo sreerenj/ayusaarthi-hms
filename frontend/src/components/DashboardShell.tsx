@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
@@ -26,7 +27,6 @@ import ReportIcon from "@mui/icons-material/ReportGmailerrorredOutlined";
 import ReceiptIcon from "@mui/icons-material/ReceiptLongOutlined";
 import BadgeIcon from "@mui/icons-material/BadgeOutlined";
 import AssessmentIcon from "@mui/icons-material/AssessmentOutlined";
-import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import TodayLabel from "@/components/TodayLabel";
 
 const DRAWER_WIDTH = 248;
@@ -53,19 +53,22 @@ function NavDrawerContent({
 }) {
   return (
     <>
-      <Toolbar sx={{ gap: 1.5 }}>
-        <Avatar sx={{ bgcolor: "primary.main", width: 36, height: 36 }}>
-          <LocalHospitalIcon fontSize="small" />
-        </Avatar>
-        <Box>
-          <Typography variant="subtitle1" sx={{ fontWeight: 700, lineHeight: 1.2 }}>
-            AyuSaarthi
-          </Typography>
-          <Typography variant="caption" color="text.secondary">
-            {facilityName}
-          </Typography>
-        </Box>
-      </Toolbar>
+      <Box sx={{ bgcolor: "#09253d", px: 2, pt: 2, pb: 1.5 }}>
+        <Image
+          src="/logo.png"
+          alt="AyuSaarthi nursing home management application"
+          width={780}
+          height={246}
+          priority
+          style={{ width: "100%", height: "auto" }}
+        />
+        <Typography
+          variant="caption"
+          sx={{ display: "block", mt: 0.5, color: "rgba(255,255,255,0.7)", textAlign: "center" }}
+        >
+          {facilityName}
+        </Typography>
+      </Box>
       <Divider />
       <List sx={{ px: 1.5, py: 2 }}>
         {navItems.map((item) => (
