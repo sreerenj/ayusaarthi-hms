@@ -21,11 +21,7 @@ export default function TodaysAppointments({ appointments }: { appointments: App
           <Box component="li" key={appt.id}>
             {index > 0 && <Divider />}
             <Box sx={{ display: "flex", alignItems: "center", gap: 2, px: 2.5, py: 1.5 }}>
-              <Typography
-                variant="body2"
-                color="primary"
-                sx={{ fontWeight: 700, width: 48, flexShrink: 0 }}
-              >
+              <Typography variant="body2" color="primary" sx={{ fontWeight: 700, width: 48, flexShrink: 0 }}>
                 {appt.time}
               </Typography>
               <Avatar sx={{ width: 36, height: 36, fontSize: 13 }}>{initials(appt.residentName)}</Avatar>

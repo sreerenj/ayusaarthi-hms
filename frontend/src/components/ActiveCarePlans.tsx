@@ -12,13 +12,7 @@ import SectionCard from "@/components/SectionCard";
 import { carePlanStatusColor } from "@/lib/status";
 import type { CarePlan } from "@/types/dashboard";
 
-export default function ActiveCarePlans({
-  plans,
-  total,
-}: {
-  plans: CarePlan[];
-  total: number;
-}) {
+export default function ActiveCarePlans({ plans, total }: { plans: CarePlan[]; total: number }) {
   return (
     <SectionCard
       title="Active Care Plans"

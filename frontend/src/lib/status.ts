@@ -6,7 +6,7 @@ import type {
   Severity,
 } from "@/types/dashboard";
 
-type ChipColor = NonNullable<ChipProps["color"]>;
+export type ChipColor = NonNullable<ChipProps["color"]>;
 
 export const severityColor: Record<Severity, ChipColor> = {
   High: "error",

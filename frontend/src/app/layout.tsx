@@ -9,7 +9,7 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "AyuSaarthi HMS | Dashboard",
+  title: { default: "AyuSaarthi HMS", template: "%s | AyuSaarthi HMS" },
   description: "Nursing home operations dashboard",
 };
 

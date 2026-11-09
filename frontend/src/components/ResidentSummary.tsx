@@ -22,10 +22,7 @@ export default function ResidentSummary({ data }: { data: ResidentSummaryData })
   const occupancy = Math.round((data.totalResidents / data.totalBeds) * 100);
 
   return (
-    <SectionCard
-      title="Resident Summary"
-      subtitle={`${data.totalResidents} of ${data.totalBeds} beds occupied`}
-    >
+    <SectionCard title="Resident Summary" subtitle={`${data.totalResidents} of ${data.totalBeds} beds occupied`}>
       <Box sx={{ mb: 2.5 }}>
         <Box sx={{ display: "flex", justifyContent: "space-between", mb: 0.5 }}>
           <Typography variant="body2" sx={{ fontWeight: 600 }}>

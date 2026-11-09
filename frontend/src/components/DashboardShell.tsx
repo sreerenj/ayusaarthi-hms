@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Badge from "@mui/material/Badge";
@@ -20,23 +22,35 @@ import DashboardIcon from "@mui/icons-material/SpaceDashboardOutlined";
 import PeopleIcon from "@mui/icons-material/PeopleAltOutlined";
 import AssignmentIcon from "@mui/icons-material/AssignmentOutlined";
 import MedicationIcon from "@mui/icons-material/MedicationOutlined";
-import EventIcon from "@mui/icons-material/EventNoteOutlined";
 import ReportIcon from "@mui/icons-material/ReportGmailerrorredOutlined";
+import ReceiptIcon from "@mui/icons-material/ReceiptLongOutlined";
+import BadgeIcon from "@mui/icons-material/BadgeOutlined";
+import AssessmentIcon from "@mui/icons-material/AssessmentOutlined";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import TodayLabel from "@/components/TodayLabel";
 
 const DRAWER_WIDTH = 248;
 
 const navItems = [
-  { label: "Dashboard", icon: <DashboardIcon />, selected: true },
-  { label: "Residents", icon: <PeopleIcon /> },
-  { label: "Care Plans", icon: <AssignmentIcon /> },
-  { label: "Medications", icon: <MedicationIcon /> },
-  { label: "Appointments", icon: <EventIcon /> },
-  { label: "Incidents", icon: <ReportIcon /> },
+  { label: "Dashboard", href: "/dashboard", icon: <DashboardIcon /> },
+  { label: "Residents", href: "/residents", icon: <PeopleIcon /> },
+  { label: "Care Plans", href: "/careplans", icon: <AssignmentIcon /> },
+  { label: "Medications", href: "/medications", icon: <MedicationIcon /> },
+  { label: "Incidents", href: "/incidents", icon: <ReportIcon /> },
+  { label: "Billing", href: "/billing", icon: <ReceiptIcon /> },
+  { label: "Staff", href: "/staff", icon: <BadgeIcon /> },
+  { label: "Reports", href: "/reports", icon: <AssessmentIcon /> },
 ];
 
-function NavDrawerContent({ facilityName }: { facilityName: string }) {
+function NavDrawerContent({
+  facilityName,
+  pathname,
+  onNavigate,
+}: {
+  facilityName: string;
+  pathname: string;
+  onNavigate: () => void;
+}) {
   return (
     <>
       <Toolbar sx={{ gap: 1.5 }}>
@@ -57,7 +71,10 @@ function NavDrawerContent({ facilityName }: { facilityName: string }) {
         {navItems.map((item) => (
           <ListItemButton
             key={item.label}
-            selected={item.selected}
+            component={Link}
+            href={item.href}
+            selected={pathname.startsWith(item.href)}
+            onClick={onNavigate}
             sx={{ borderRadius: 2, mb: 0.5 }}
           >
             <ListItemIcon sx={{ minWidth: 40 }}>{item.icon}</ListItemIcon>
@@ -77,6 +94,8 @@ export default function DashboardShell({
   children: React.ReactNode;
 }) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
+  const title = navItems.find((item) => pathname.startsWith(item.href))?.label ?? "AyuSaarthi";
 
   return (
     <Box sx={{ display: "flex", minHeight: "100vh" }}>
@@ -102,7 +121,7 @@ export default function DashboardShell({
           </IconButton>
           <Box sx={{ flexGrow: 1 }}>
             <Typography variant="h6" component="h1" sx={{ lineHeight: 1.2 }}>
-              Facility Dashboard
+              {title}
             </Typography>
             <TodayLabel />
           </Box>
@@ -111,9 +130,7 @@ export default function DashboardShell({
               <NotificationsNoneIcon />
             </Badge>
           </IconButton>
-          <Avatar sx={{ bgcolor: "secondary.main", width: 36, height: 36, fontSize: 14 }}>
-            NA
-          </Avatar>
+          <Avatar sx={{ bgcolor: "secondary.main", width: 36, height: 36, fontSize: 14 }}>NA</Avatar>
         </Toolbar>
       </AppBar>
 
@@ -128,7 +145,7 @@ export default function DashboardShell({
             "& .MuiDrawer-paper": { width: DRAWER_WIDTH },
           }}
         >
-          <NavDrawerContent facilityName={facilityName} />
+          <NavDrawerContent facilityName={facilityName} pathname={pathname} onNavigate={() => setMobileOpen(false)} />
         </Drawer>
         <Drawer
           variant="permanent"
@@ -138,14 +155,11 @@ export default function DashboardShell({
             "& .MuiDrawer-paper": { width: DRAWER_WIDTH, borderRight: 1, borderColor: "divider" },
           }}
         >
-          <NavDrawerContent facilityName={facilityName} />
+          <NavDrawerContent facilityName={facilityName} pathname={pathname} onNavigate={() => setMobileOpen(false)} />
         </Drawer>
       </Box>
 
-      <Box
-        component="main"
-        sx={{ flexGrow: 1, minWidth: 0, p: { xs: 2, md: 3 }, bgcolor: "background.default" }}
-      >
+      <Box component="main" sx={{ flexGrow: 1, minWidth: 0, p: { xs: 2, md: 3 }, bgcolor: "background.default" }}>
         <Toolbar />
         {children}
       </Box>

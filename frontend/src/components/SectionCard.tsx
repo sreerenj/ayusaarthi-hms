@@ -11,13 +11,7 @@ interface SectionCardProps {
   disablePadding?: boolean;
 }
 
-export default function SectionCard({
-  title,
-  subtitle,
-  action,
-  children,
-  disablePadding = false,
-}: SectionCardProps) {
+export default function SectionCard({ title, subtitle, action, children, disablePadding = false }: SectionCardProps) {
   return (
     <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <Box
@@ -43,7 +37,14 @@ export default function SectionCard({
         </Box>
         {action}
       </Box>
-      <CardContent sx={{ flexGrow: 1, p: disablePadding ? 0 : 2.5, pt: disablePadding ? 0 : 0.5, "&:last-child": { pb: disablePadding ? 0 : 2.5 } }}>
+      <CardContent
+        sx={{
+          flexGrow: 1,
+          p: disablePadding ? 0 : 2.5,
+          pt: disablePadding ? 0 : 0.5,
+          "&:last-child": { pb: disablePadding ? 0 : 2.5 },
+        }}
+      >
         {children}
       </CardContent>
     </Card>
