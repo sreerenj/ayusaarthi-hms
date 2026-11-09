@@ -1,3 +1,4 @@
+using AyuSaarthi.Domain.Entities;
 using AyuSaarthi.Domain.Repositories;
 using AyuSaarthi.Infrastructure.Persistence;
 using AyuSaarthi.Infrastructure.Persistence.Repositories;
@@ -20,6 +21,8 @@ public static class DependencyInjection
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<AppDbContext>());
         services.AddScoped<IFacilityRepository, FacilityRepository>();
         services.AddScoped<IResidentRepository, ResidentRepository>();
+        services.AddScoped<IRoomRepository, RoomRepository>();
+        services.AddScoped<IRepository<NursingUnit>, Repository<NursingUnit>>();
 
         return services;
     }

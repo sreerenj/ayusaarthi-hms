@@ -8,6 +8,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 {
     public DbSet<Facility> Facilities => Set<Facility>();
     public DbSet<Resident> Residents => Set<Resident>();
+    public DbSet<NursingUnit> Units => Set<NursingUnit>();
+    public DbSet<Room> Rooms => Set<Room>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
